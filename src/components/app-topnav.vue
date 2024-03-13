@@ -8,7 +8,7 @@
         </template>
         <template v-else>
           <li><RouterLink to="/login">请先登录</RouterLink></li>
-          <li><a href="javascript:;">免费注册</a></li>
+          <li><RouterLink to="/login/1">免费注册</RouterLink></li>
         </template>
         <li><a href="javascript:;" @click="goOrder">我的订单</a></li>
         <li><a href="javascript:;" @click="goMember">会员中心</a></li>

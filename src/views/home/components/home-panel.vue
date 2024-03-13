@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="js" name="HomePanel">
-// 此组件定义了一个通用面板样式
 
+// 此组件定义了一个通用面板样式
 const props = defineProps({
   title: {
     type: String,

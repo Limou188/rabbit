@@ -2,7 +2,7 @@
   <div class="home-panel">
     <div class="header">
       <h4>{{ title }}</h4>
-      <XtxMore :to="`${src}`" />
+      <XtxMore :to="`${src}`"  v-show="props.lookAll"/>
     </div>
     <!-- 商品 -->
     <div class="goods-list">
@@ -22,9 +22,12 @@ const props = defineProps({
   src: {
     type:String,
     default:''
+  },
+  lookAll:{
+    type:Boolean,
+    default:true
   }
 })
-console.log(props.src);
 
 </script>
 

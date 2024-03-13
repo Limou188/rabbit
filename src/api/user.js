@@ -34,3 +34,44 @@ export const userMobileLoginMsg = (mobile) => {
 export const mergeLocalCart = (cartList) => {
   return request('/member/cart/merge','post',cartList)
 }
+
+/**
+ * 获取用户信息
+ * @returns Promise
+ */
+export const getUserInfo = () => {
+  return request('/member/profile','get')
+}
+
+/**
+ * 修改用户信息
+ * @param {Object} formData - 用户信息
+ */
+export const updateUserInfo = (formData) => {
+  return request('/member/profile','put',formData)
+}
+
+/**
+ * 修改用户头像
+ * @param {file} formData - 用户头像
+ */
+export const updatePortrait = (formData) => {
+  return request('/member/profile/avatar','post',formData)
+}
+
+/**
+ * 获取验证码
+ * @param {string} mobile - 手机号
+ * @param {string} type - 验证码类型
+ * */
+export const getVerifyCode = (mobile,type) => {
+  return request('/code','get',{mobile,type})
+}
+
+/**
+ * 用户注册
+ * @param {string} formData - 用户信息
+ */
+export const userRegister = (formData) => {
+  return request('/register','post',formData)
+}

@@ -43,13 +43,18 @@ const router = createRouter({
           component: () => import('@/views/member/layout.vue'),
           children: [
             {
-              // 个人中心首页商品页面
+              // 个人中心首页
               path: '/member',
               component: () => import('@/views/member/home/index.vue'),
             },
             {
+              // 个人中心足迹页面
               path: '/member/steps',
               component:() => import('@/views/member/home/components/home-steps.vue')
+            },            {
+              // 修改个人信息页面
+              path: '/member/personal',
+              component:() => import('@/views/member/home/components/home-personal.vue')
             },
             {
               // 个人中心订单页面
@@ -78,7 +83,7 @@ const router = createRouter({
     },
     {
       // 登录页面
-      path: '/login',
+      path: '/login/:id?',
       component: () => import('@/views/login/index.vue')
     },
     {

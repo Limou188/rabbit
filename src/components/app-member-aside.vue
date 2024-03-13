@@ -5,7 +5,7 @@
       <div class="links">
         <RouterLink to="/member" exact-active-class="active">个人中心</RouterLink>
         <a href="javascript:;">消息通知</a>
-        <a href="javascript:;">个人信息</a>
+        <RouterLink to="/member/personal" exact-active-class="active">个人信息</RouterLink>
         <a href="javascript:;">安全设置</a>
         <a href="javascript:;">地址管理</a>
         <a href="javascript:;">我的积分</a>

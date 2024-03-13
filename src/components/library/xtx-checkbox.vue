@@ -1,5 +1,5 @@
 <template>
-  <div class="xtx-checkbox" @click="changeChecked()">
+  <div class="xtx-checkbox" @click="changeChecked">
     <!-- 勾选 -->
   <i v-if="checked" class="iconfont icon-checked"></i>
     <!-- 取消勾选 -->
@@ -9,27 +9,28 @@
 </template>
 
 <script setup lang="js" name="XtxCheckbox">
-import { ref,watch } from 'vue';
+import { ref, watch } from 'vue';
 // v-model  ====>  :modelValue  +   @update:modelValue
 const props = defineProps({
   modelValue: {
     type:Boolean,
-    default: false
+    default: ''
   }
 })
 
 const emit = defineEmits(['change'])
-
-const checked = ref(false)
+const checked = ref()
 
 const changeChecked = () => {
-  checked.value = !checked.value
+  // checked.value = !checked.value
    // 使用emit通知父组件数据的改变
+  //  console.log(props);
   emit('change',checked.value)
 }
 
 // 使用侦听器，得到父组件传递数据，给checked数据
-watch(()=>props.modelValue,()=>{
+watch(() => props.modelValue,()=>{
+  // console.log(props.modelValue);
   checked.value = props.modelValue
 },{immediate:true})
 

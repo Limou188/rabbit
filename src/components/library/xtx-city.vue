@@ -115,7 +115,7 @@ const currList = computed(()=>{
   let currList = cityData.value
   // 城市
   if(changeResult.provinceCode){
-    currList = currList.find(p => p.code ===changeResult.provinceCode).areaList
+    currList = currList.find(p => p.code === changeResult.provinceCode).areaList
   }
   // 地区
   if(changeResult.cityCode){
@@ -155,6 +155,7 @@ const changeItem = (item) => {
   z-index: 400;  
   .select {
     border: 1px solid #e4e4e4;
+    border-radius: 5px;
     height: 30px;
     padding: 0 5px;
     line-height: 28px;
@@ -191,7 +192,7 @@ const changeItem = (item) => {
       width: 130px;
       text-align: center;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 0 3px;
       &:hover {
         background: #f5f5f5;

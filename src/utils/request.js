@@ -16,6 +16,9 @@ const instance = axios.create({
   // baseURL:baseURL ,
   baseURL,
   timeout:5000,
+  headers:{
+    'Content-Type': 'application/json',// 默认情况下可以设置为JSON格式
+  }
 })
 
 // 请求拦截
@@ -58,17 +61,33 @@ instance.interceptors.response.use(
 })
 
 // 请求工具函数
-export default (url, method, submitData) => {
-  // 负责发请求：请求地址，请求方式，提交的数据
-  return instance({
+export default (url, method, submitData, config = {}) => {
+  const requestConfig = {
     url,
-    method,
-    // 1. 如果是get请求  需要使用params来传递submitData   ?a=10&c=10
-    // 2. 如果不是get请求  需要使用data来传递submitData   请求体传参
-    // [] 设置一个动态的key, 写js表达式，js表达式的执行结果当作KEY
-    // method参数：get,Get,GET  转换成小写再来判断
-    // 在对象，['params']:submitData ===== params:submitData 这样理解
-    // [method === 'get' ? 'params' : 'data']: submitData
-    [method.toLowerCase() === 'get' ? 'params' : 'data']: submitData
-  })
+    method: method.toLowerCase(),
+    [method.toLowerCase() === 'get' ? 'params' : 'data']: submitData,
+    ...config, // 合并外部传入的配置项
+  };
+
+  // 如果是文件上传或需要设置特定的Content-Type
+  if ( submitData instanceof FormData || (config.headers && config.headers['Content-Type'] === 'multipart/form-data')) {
+    // 覆盖默认的Content-Type
+    requestConfig.headers = requestConfig.headers || {};
+    requestConfig.headers['Content-Type'] = 'multipart/form-data';
+  }
+
+  return instance(requestConfig)
 }
+  // // 负责发请求：请求地址，请求方式，提交的数据
+  // return instance({
+  //   url,
+  //   method: method.toLowerCase(),
+  //   // 1. 如果是get请求  需要使用params来传递submitData   ?a=10&c=10
+  //   // 2. 如果不是get请求  需要使用data来传递submitData   请求体传参
+  //   // [] 设置一个动态的key, 写js表达式，js表达式的执行结果当作KEY
+  //   // method参数：get,Get,GET  转换成小写再来判断
+  //   // 在对象，['params']:submitData ===== params:submitData 这样理解
+  //   // [method === 'get' ? 'params' : 'data']: submitData
+  //   [method.toLowerCase() === 'get' ? 'params' : 'data']: submitData,
+  // })
+// }

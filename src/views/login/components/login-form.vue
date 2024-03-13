@@ -8,7 +8,7 @@
         <i class="iconfont icon-msg"></i>使用短信登入
       </a>
     </div>
-    <Form ref="formCom" class="form" :validation-schema="schema" autocomplete="off" v-slot="{ errors }">
+    <Form ref="formCom" class="form" :validation-schema="mySchema" autocomplete="off" v-slot="{ errors }">
       <template v-if="!isMsgLogin">
         <div class="form-item">
           <div class="input">
@@ -49,7 +49,8 @@
       </template>
       <div class="form-item">
         <div class="agree">
-          <Field as="XtxCheckbox" name="isAgree" v-model="form.isAgree" @click="form.isAgree = !form.isAgree" />
+          <!-- <Field as="xtx-checkbox" name="isAgree" :modelValue="1" @change="changeAgree" /> -->
+          <xtx-checkbox :modelValue="form.isAgree" @change="changeAgree" ></xtx-checkbox>
           <span>我已同意</span>
           <a href="javascript:;">《用户协议》</a>
           <span>和</span>
@@ -61,7 +62,7 @@
     <div class="action">
       <div class="url">
         <a href="javascript:;">忘记密码</a>
-        <a href="javascript:;">免费注册</a>
+        <a href="javascript:;" @click="clickRegister">免费注册</a>
         <img src="../../../assets/images/QQ.jpg">
       </div>
     </div>
@@ -88,6 +89,11 @@ import { useCartStore } from '@/stores/modules/cart'
 // Field 的 as 属性可以指定为其他标签，也可指定为组件。
 // 但是组件需要支持 v-model 否则校验不会触发
 
+// 点击注册
+const emit = defineEmits(['register'])
+const clickRegister = () => {
+  emit('register')
+}
 
 // 是否短信登入
 const isMsgLogin = ref(false)
@@ -107,14 +113,13 @@ const form = reactive({
 // })
 
 // 校验规则对象
-const mySchems = {
+const mySchema = {
   account: veeSchema.account,
   password: veeSchema.password,
   mobile: veeSchema.mobile,
   code: veeSchema.code,
-  isAgree: veeSchema.isAgree
+  isAgree: veeSchema.isAgree,
 }
-const schema = mySchems
 // 切换登入，还原数据和清除校验效果
 const formCom = ref(null)
 watch(isMsgLogin, () => {
@@ -128,6 +133,11 @@ watch(isMsgLogin, () => {
   formCom.value.resetForm();
 
 })
+// 点击勾选/取消勾选用户协议
+const changeAgree = (checked) => {
+  form.isAgree = !checked
+  // console.log(checked);
+}
 
 // pause 暂停 resume 开始
 // useIntervalFn(回调函数，执行间隔，是否立即开启)
@@ -144,7 +154,7 @@ onUnmounted(() => {
 })
 // 发送短信验证码
 const send = async () => {
-  const valid = mySchems.mobile(form.mobile)// 调用校验函数里的手机号校验
+  const valid = mySchema.mobile(form.mobile)// 调用校验函数里的手机号校验
   if (valid === true) {// 校验结果为true
     // 通过
     if (time.value === 0) {
@@ -171,7 +181,7 @@ const route = useRoute()
 
 const cartStore = useCartStore()
 
-// 登入提交,validate()整体表单校验
+// 登入提交,调用vee-validate-schema内置的validate()整体表单校验
 const submit = async () => {
   // 整体校验
   const valid = await formCom.value.validate()
@@ -338,6 +348,9 @@ const submit = async () => {
       a {
         color: #999;
         margin-left: 10px;
+        &:hover{
+          color: @xtxColor;
+        }
       }
     }
   }

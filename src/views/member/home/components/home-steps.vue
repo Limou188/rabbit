@@ -2,7 +2,7 @@
   <div class="header">
     <HomeOverview />
   </div>
-  <HomePanel title="我的足迹" v-if="stepsStore.steps.length">
+  <HomePanel title="我的足迹" :lookAll="false" v-if="stepsStore.steps.length">
     <div class="box">
       <ul class="goods-list">
         <li v-for="item of stepsStore.steps" :key="item.id">
@@ -11,7 +11,7 @@
       </ul>
     </div>
   </HomePanel>
-  <HomePanel title="我的足迹" v-else>
+  <HomePanel title="我的足迹" :lookAll="false" v-else>
     <div class="box">
       <img src="@/assets/images/none.png" alt="">
     </div>
@@ -51,16 +51,15 @@ const stepsStore = useStepsStore()
   li {
     width: 240px;
     height: 300px;
-    // margin-right: 10px;
     margin-bottom: 10px;
 
-    &:nth-last-child(-n+4) {
-      margin-bottom: 0;
-    }
+    // &:nth-last-child(-n+4) {
+    //   margin-bottom: 0;
+    // }
 
-    &:nth-child(4n) {
-      margin-right: 0;
-    }
+    // &:nth-child(4n) {
+    //   margin-right: 0;
+    // }
   }
 }
 </style>

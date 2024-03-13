@@ -37,7 +37,7 @@ const props = defineProps({
     default:() => {}
   }
 })
-
+console.log(props);
 const provinceCode = ref('')// 初始化省份
 const cityCode = ref('')// 初始化城市
 const countyCode = ref('')// 初始化县
